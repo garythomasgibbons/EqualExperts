@@ -98,6 +98,7 @@ To be executed in supported browsers and mobile devices.
 
  firstName | surName | price | checkIn | checkOut 
   --- | --- | ---| ---  | --- 
+|           |  |  |  | | 
 |           | validSurname | 10.00 | 2020-10-10 | 2020-10-11 | 
 | 213       | validSur    | 10.00 | 2020-10-10 | 2020-10-11 | 
 | $%#%      | validSur    | 10.00 | 2020-10-10 | 2020-10-11 | 
