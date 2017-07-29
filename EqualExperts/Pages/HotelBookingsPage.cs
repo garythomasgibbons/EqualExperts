@@ -1,11 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EqualExperts.Pages
 {
@@ -20,31 +15,29 @@ namespace EqualExperts.Pages
         private By checkInTxt => By.Id("checkin");
         private By checkOutTxt => By.Id("checkout");
         private By saveButton => By.CssSelector("[value=' Save ']");
-        private By numberOfBookings => By.Id("bookings");
-
-        public BookingDetails bookingDetails = new BookingDetails("firstname", "lastName", "10.00", "false", "2019-10-10", "2019-10-10");
+        private By bookings => By.CssSelector("div#bookings > div");
 
         public HotelBookingsPage()
         {
             Page = driver;
-            NumberOfBookings = GetBookingsCount();
         }
 
         public void LoadPage(string url)
         {
             Page.Url = url;
+            NumberOfBookings = GetBookingsCount();
         }
 
         public int GetBookingsCount()
         {
-            return Page.FindElements(numberOfBookings).Count - 1;
+            return Page.FindElements(bookings).Count - 1;
         }
 
-        public void CreateABooking()
+        public void CreateABooking(string firstName, string lastName, string price)
         {
-            Page.FindElement(firstNameTxt).SendKeys(bookingDetails.FirstName);
-            Page.FindElement(lastNameTxt).SendKeys(bookingDetails.LastName);
-            Page.FindElement(totalPriceTxt).SendKeys(bookingDetails.Price);           
+            Page.FindElement(firstNameTxt).SendKeys(firstName);
+            Page.FindElement(lastNameTxt).SendKeys(lastName);
+            Page.FindElement(totalPriceTxt).SendKeys(price);           
         }
 
         public void ClickSave()
@@ -53,15 +46,10 @@ namespace EqualExperts.Pages
             Page.Navigate().Refresh();
         }
 
-        public void SetValidBigEndianDates()
+        public void SetDates(string checkIn, string checkOut)
         {
-            Page.FindElement(checkInTxt).SendKeys(bookingDetails.CheckIn);
-            Page.FindElement(checkOutTxt).SendKeys(bookingDetails.CheckOut);
-        }
-
-        public void SetDepositToFalse()
-        {
-            SetDeposit("false");
+            Page.FindElement(checkInTxt).SendKeys(checkIn);
+            Page.FindElement(checkOutTxt).SendKeys(checkOut);
         }
 
         public bool BookingCreated()
@@ -69,41 +57,24 @@ namespace EqualExperts.Pages
             return GetBookingsCount().Equals(NumberOfBookings + 1);
         }
 
-        public bool CheckBookingDetails()
+        public bool CheckBookingDetails(BookingDetails expectedBookingDetails)
         {
             //to do
+            BookingDetails actualBookingDetails = GetMyBooking();
             return true;
         }
 
-        private void SetDeposit(string value)
+        private BookingDetails GetMyBooking()
         {
-            new SelectElement(Page.FindElement(depositSelect)).SelectByText(value);
+            var allBookings = Page.FindElements(bookings);
+            var hold = (GetBookingsCount() + 1).ToString();
+            var myBooking = Page.FindElements(By.CssSelector("div#bookings > div:nth(13)"));
+            return new BookingDetails("firstname", "lastName", "10.00", "false", "2019-10-10", "2019-10-10");
         }
 
-        public class BookingDetails
+        public void SetDeposit(string value)
         {
-            public string FirstName;
-            public string LastName;
-            public string Price;
-            public string Deposit;
-            public string CheckIn;
-            public string CheckOut;
-
-            public BookingDetails(string firstname, string lastName, string price, string deposit, string checkIn, string checkOut)
-            {
-                FirstName = firstname + "_" + GetTimeInSeconds().ToString();
-                LastName = lastName + "_" + GetTimeInSeconds().ToString(); 
-                Price = price;
-                Deposit = deposit;
-                CheckIn = checkIn;
-                CheckOut = checkOut;
-            }
-
-            private int GetTimeInSeconds()
-            {
-                TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
-                return (int)t.TotalSeconds;
-            }
+            new SelectElement(Page.FindElement(depositSelect)).SelectByText(value);
         }
     }
 }

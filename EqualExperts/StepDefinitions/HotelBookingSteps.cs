@@ -1,6 +1,5 @@
 ﻿using TechTalk.SpecFlow;
 using EqualExperts.Pages;
-using OpenQA.Selenium.Chrome;
 using FluentAssertions;
 
 namespace EqualExperts.StepDefinitions
@@ -8,11 +7,13 @@ namespace EqualExperts.StepDefinitions
     [Binding]
     public sealed class HotelBookingSteps : HotelBookingsPage
     {
-        private HotelBookingsPage HotelBookingsPage;
+        private HotelBookingsPage hotelBookingsPage;
+        public BookingDetails bookingDetails;
 
-        HotelBookingSteps(HotelBookingsPage hotelBookingsPage)
+        HotelBookingSteps(HotelBookingsPage HotelBookingsPage)
         {
-            HotelBookingsPage = hotelBookingsPage;
+            hotelBookingsPage = HotelBookingsPage;
+            bookingDetails = new BookingDetails("firstname", "lastName", "10.00", "false", "2019-10-10", "2019-10-10");
         }
          
         [Given(@"I have a browser open")]
@@ -24,51 +25,43 @@ namespace EqualExperts.StepDefinitions
         [Given(@"I the url is '(.*)'")]
         public void GivenITheUrlIs(string url)
         {
-            HotelBookingsPage.LoadPage(url);
+            hotelBookingsPage.LoadPage(url);
         }
 
         [Given(@"I enter valid details into all required input fields")]
         public void GivenIEnterValidDetailsIntoAllRequiredInputFields()
         {
-            HotelBookingsPage.CreateABooking();
+             hotelBookingsPage.CreateABooking(bookingDetails.FirstName, bookingDetails.LastName, bookingDetails.Price);
         }
 
         [Given(@"I set deposit to false")]
         public void GivenISetDepositToFalse()
         {
-            HotelBookingsPage.SetDepositToFalse();
+            hotelBookingsPage.SetDeposit(bookingDetails.Deposit);
         }
 
         [Given(@"I type valid and logical dates directly into the checkin and checkout fields in big endian format yyyy-mm-dd")]
         public void GivenITypeValidAndLogicalDatesDirectlyIntoTheCheckinAndCheckoutFieldsInBigEndianFormatYyyy_Mm_Dd()
         {
-            HotelBookingsPage.SetValidBigEndianDates();
+            hotelBookingsPage.SetDates(bookingDetails.CheckIn, bookingDetails.CheckOut);
         }
 
         [When(@"I click save")]
         public void WhenIClickSave()
         {
-            HotelBookingsPage.ClickSave();
+            hotelBookingsPage.ClickSave();
         }
 
         [Then(@"my reservation will be created")]
         public void ThenMyReservationWillBeCreated()
         {
-            HotelBookingsPage.BookingCreated().Should().BeTrue();
+           hotelBookingsPage.BookingCreated().Should().BeTrue();
         }
 
         [Then(@"my booking details are correct")]
         public void ThenMyBookingDetailsAreCorrect()
         {
-            HotelBookingsPage.CheckBookingDetails().Should().BeTrue();
+            hotelBookingsPage.CheckBookingDetails(bookingDetails).Should().BeTrue();
         }
-
-
-
-
-
-
-
-
     }
 }
