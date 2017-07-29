@@ -46,6 +46,17 @@ To be executed in supported browsers and mobile devices.
 *When I delete the booking* <br>
 *Then the booking will be deleted* <br>
 
+**Scenario:** Delete all bookings <br>
+*Given I have more than one booking* <br>
+*When I delete all the bookings* <br>
+*Then all the bookings will be deleted* <br>
+
+**Scenario:** Concurrently delete a single booking in a different session<br>
+*Given I have one booking* <br>
+*When User 1 one deletes the booking* <br>
+*And User 2 deletes the same booking*
+*Then the booking will be deleted* <br>
+
 **Scenario:** Create a booking with a **check-in date** in the past <br>
 *Given I enter an historic check-in date* <br>
 *And I enter valid details for all other inputs* <br>
