@@ -1,6 +1,7 @@
 ﻿using TechTalk.SpecFlow;
 using EqualExperts.Pages;
 using FluentAssertions;
+using System;
 
 namespace EqualExperts.StepDefinitions
 {
@@ -13,13 +14,14 @@ namespace EqualExperts.StepDefinitions
         HotelBookingSteps(HotelBookingsPage HotelBookingsPage)
         {
             hotelBookingsPage = HotelBookingsPage;
-            bookingDetails = new BookingDetails("firstname", "lastName", "10.00", "false", "2019-10-10", "2019-10-10");
+            var checkIn = DateTime.Now.ToString("yyyy-MM-dd");
+            var checkOut = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+            bookingDetails = new BookingDetails("firstname", "lastName", "10.52", "false", checkIn, checkOut);
         }
          
         [Given(@"I have a browser open")]
         public void GivenIHaveABrowserOpen()
         {
-
         }
 
         [Given(@"I the url is '(.*)'")]
