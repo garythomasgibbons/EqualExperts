@@ -33,7 +33,7 @@ namespace EqualExperts.StepDefinitions
         [Given(@"I enter valid details into all required input fields")]
         public void GivenIEnterValidDetailsIntoAllRequiredInputFields()
         {
-             hotelBookingsPage.CreateABooking(bookingDetails.FirstName, bookingDetails.LastName, bookingDetails.Price);
+             hotelBookingsPage.CreateNamePrice(bookingDetails.FirstName, bookingDetails.LastName, bookingDetails.Price);
         }
 
         [Given(@"I set deposit to false")]
