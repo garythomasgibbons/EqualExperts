@@ -98,6 +98,25 @@ testRunner.Then("my reservation will be created", ((string)(null)), ((TechTalk.S
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Delete a booking")]
+        public virtual void DeleteABooking()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete a booking", ((string[])(null)));
+#line 15
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line 16
+testRunner.Given("I have created a booking", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 17
+testRunner.When("I delete the booking", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 18
+testRunner.Then("the booking will be deleted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

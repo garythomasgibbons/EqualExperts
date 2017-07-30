@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.ObjectModel;
 
 namespace EqualExperts.Pages
 {
@@ -17,6 +18,7 @@ namespace EqualExperts.Pages
         private By checkOutTxt => By.Id("checkout");
         private By saveButton => By.CssSelector("[value=' Save ']");
         private By bookings => By.CssSelector("div#bookings > div");
+        private By deleteButton => By.CssSelector("[value='Delete']");
 
         public HotelBookingsPage()
         {
@@ -26,9 +28,16 @@ namespace EqualExperts.Pages
         public void LoadPage(string url)
         {
             Page.Url = url;
+            //If no bookings we dont need to wait for ajax to complete
+            if (!Page.FindElements(deleteButton).Count.Equals(0))
+                WaitForAjax();
+                NumberOfBookings = GetBookingsCount();
+        }
+
+        private void WaitForAjax()
+        {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
             wait.Until(d => (bool)(d as IJavaScriptExecutor).ExecuteScript("return jQuery.active == 0"));
-            NumberOfBookings = GetBookingsCount();
         }
 
         public int GetBookingsCount()
@@ -46,7 +55,13 @@ namespace EqualExperts.Pages
         public void ClickSave()
         {
             Page.FindElement(saveButton).Click();
+            RefreshPage();
+        }
+
+        private void RefreshPage()
+        {
             Page.Navigate().Refresh();
+            WaitForAjax();
         }
 
         public void SetDates(string checkIn, string checkOut)
@@ -58,6 +73,11 @@ namespace EqualExperts.Pages
         public bool BookingCreated()
         {
            return GetBookingsCount().Equals(NumberOfBookings + 1);
+        }
+
+        public bool BookingDeleted()
+        {
+            return GetBookingsCount().Equals(NumberOfBookings);
         }
 
         public bool CheckBookingDetails(BookingDetails expectedBookingDetails)
@@ -79,17 +99,28 @@ namespace EqualExperts.Pages
 
         private BookingDetails GetMyBooking()
         {
-            var myRow = (GetBookingsCount() + 1).ToString();
-            var myBooking = Page.FindElements(By.CssSelector("div#bookings > div:nth-child(" + myRow +")"));
-
-            var first = myBooking[0].FindElement(By.CssSelector("div:nth-child(1)")).Text;
-            var last = myBooking[0].FindElement(By.CssSelector("div:nth-child(2)")).Text;
-            var price = myBooking[0].FindElement(By.CssSelector("div:nth-child(3)")).Text;
-            var deposit = myBooking[0].FindElement(By.CssSelector("div:nth-child(4)")).Text;
-            var checkIn = myBooking[0].FindElement(By.CssSelector("div:nth-child(5)")).Text;
-            var checkOut = myBooking[0].FindElement(By.CssSelector("div:nth-child(6)")).Text;
+            var theLastBooking = GetLastBooking();
+            var first = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(1)")).Text;
+            var last = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(2)")).Text;
+            var price = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(3)")).Text;
+            var deposit = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(4)")).Text;
+            var checkIn = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(5)")).Text;
+            var checkOut = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(6)")).Text;
 
             return new BookingDetails(first, last, price, deposit, checkIn, checkOut);
+        }
+
+        private ReadOnlyCollection<IWebElement> GetLastBooking()
+        {
+            var myRow = (GetBookingsCount() + 1).ToString();
+            return Page.FindElements(By.CssSelector("div#bookings > div:nth-child(" + myRow + ")"));
+        }
+
+        public void DeleteTheLastBooking()
+        {
+            var theLastBooking = GetLastBooking();
+            theLastBooking[0].FindElement(deleteButton).Click();
+            RefreshPage();
         }
 
         public void SetDeposit(string value)

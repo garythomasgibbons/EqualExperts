@@ -16,7 +16,7 @@ namespace EqualExperts.StepDefinitions
             hotelBookingsPage = HotelBookingsPage;
             var checkIn = DateTime.Now.ToString("yyyy-MM-dd");
             var checkOut = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
-            bookingDetails = new BookingDetails("firstname", "lastName", "10.52", "false", checkIn, checkOut);
+            bookingDetails = new BookingDetails("firstname_" + GetUniqueValue(), "lastName_" + GetUniqueValue(), "10.52", "false", checkIn, checkOut);
         }
          
         [Given(@"I have a browser open")]
@@ -37,13 +37,13 @@ namespace EqualExperts.StepDefinitions
         }
 
         [Given(@"I set deposit to false")]
-        public void GivenISetDepositToFalse()
+        public void GivenISetDeposit()
         {
             hotelBookingsPage.SetDeposit(bookingDetails.Deposit);
         }
 
         [Given(@"I type valid and logical dates directly into the checkin and checkout fields in big endian format yyyy-mm-dd")]
-        public void GivenITypeValidAndLogicalDatesDirectlyIntoTheCheckinAndCheckoutFieldsInBigEndianFormatYyyy_Mm_Dd()
+        public void GivenITypeValidAndLogicalDatesDirectlyIntoTheCheckinAndCheckoutFieldsInBigEndianFormat()
         {
             hotelBookingsPage.SetDates(bookingDetails.CheckIn, bookingDetails.CheckOut);
         }
@@ -64,6 +64,33 @@ namespace EqualExperts.StepDefinitions
         public void ThenMyBookingDetailsAreCorrect()
         {
             hotelBookingsPage.CheckBookingDetails(bookingDetails).Should().BeTrue();
+        }
+
+        [Given(@"I have created a booking")]
+        public void GivenIHaveCreatedABooking()
+        {
+            GivenIEnterValidDetailsIntoAllRequiredInputFields();
+            GivenISetDeposit();
+            GivenITypeValidAndLogicalDatesDirectlyIntoTheCheckinAndCheckoutFieldsInBigEndianFormat();
+            WhenIClickSave();
+        }
+
+        [When(@"I delete the booking")]
+        public void WhenIDeleteTheBooking()
+        {
+            hotelBookingsPage.DeleteTheLastBooking();
+        }
+
+        [Then(@"the booking will be deleted")]
+        public void ThenTheBookingWillBeDeleted()
+        {
+            hotelBookingsPage.BookingDeleted().Should().BeTrue();
+        }
+
+        private int GetUniqueValue()
+        {
+            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            return (int)t.TotalSeconds;
         }
     }
 }

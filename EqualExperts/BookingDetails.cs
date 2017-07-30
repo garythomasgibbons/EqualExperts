@@ -13,18 +13,12 @@ namespace EqualExperts
 
         public BookingDetails(string firstname, string lastName, string price, string deposit, string checkIn, string checkOut)
         {
-            FirstName = firstname + "_" + GetTimeInSeconds().ToString();
-            LastName = lastName + "_" + GetTimeInSeconds().ToString();
+            FirstName = firstname;
+            LastName = lastName;
             Price = price;
             Deposit = deposit;
             CheckIn = checkIn;
             CheckOut = checkOut;
-        }
-
-        private int GetTimeInSeconds()
-        {
-            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
-            return (int)t.TotalSeconds;
         }
     }
 }
