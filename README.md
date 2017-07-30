@@ -4,8 +4,6 @@
 
 To be executed in supported browsers and mobile devices.
 
-As there were no specific requirements for this feature I approached the testing and formulated the tests so as to define the requirements. Ideally this would have taken place with a product owner / BA, however the tests can now kick off a discussion with the team.
-
 **Background:** I am viewing the booking url <br>
 *Given I have a browser open* <br>
 **And the browser has javascript enabled** <br>
