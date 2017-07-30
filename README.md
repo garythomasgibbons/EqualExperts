@@ -25,6 +25,20 @@ To be executed in supported browsers and mobile devices.
 *Then my reservation will be created* <br>
 *And all details will be displayed correctly*<br>
 
+**Scenario:** Create a booking with price as double<br>
+*Given I add a price as '10.99'
+*And I enter valid details into all other required fields* <br>
+*when I click save* <br>
+*Then my reservation will be created* <br>
+*And all details will be displayed correctly*<br>
+
+**Scenario:** Create a booking with price as an integer<br>
+*Given I add a price as '100'
+*And I enter valid details into all other required fields* <br>
+*when I click save* <br>
+*Then my reservation will be created* <br>
+*And all details will be displayed correctly*<br>
+
 **Scenario:** Create a booking typing date values in big endian format <br>
 *Given I enter valid details into all required input fields* <br>
 *And I set deposit to false* <br>
@@ -51,10 +65,10 @@ To be executed in supported browsers and mobile devices.
 *When I delete all the bookings* <br>
 *Then all the bookings will be deleted* <br>
 
-**Scenario:** Concurrently delete a single booking in a different session<br>
+**Scenario:** Concurrently delete a single booking in different sessions<br>
 *Given I have one booking* <br>
 *When User 1 one deletes the booking* <br>
-*And User 2 deletes the same booking*
+*And User 2 deletes the same booking* <br>
 *Then the booking will be deleted* <br>
 
 **Scenario:** Create a booking with a **check-in date** in the past <br>
@@ -119,12 +133,15 @@ To be executed in supported browsers and mobile devices.
 | vaidfirst |   validSur  |  | 2020-10-10 | 2020-10-11 |
 | vaidfirst |   validSur  | fds | 2020-10-10 | 2020-10-11 |
 | vaidfirst |   validSur  | -10 | 2020-10-10 | 2020-10-11 |
+| vaidfirst |   validSur  | 10.123 | 2020-10-10 | 2020-10-11 |
 | vaidfirst |   validSur  | 10  |  | 2020-10-11 |
 | vaidfirst |   validSur | 10   | tenth April  | 2020-10-11 |
 | vaidfirst |   validSur | 10.00   | $%#%  | 2020-10-11 |
+| vaidfirst |   validSur | 10.00   | 20201010 | 2020-10-11 |
 | vaidfirst |   validSur | 10.00   | 2020-10-10  |  |
 | vaidfirst |   validSur | 10.00   | 2020-10-10  | tenth April |
 | vaidfirst |   validSur | 10.00   | 2020-10-10  | $%#%       |
+| vaidfirst |   validSur | 10.00   | 2020-10-10  | 20201010      |
 
 
 
