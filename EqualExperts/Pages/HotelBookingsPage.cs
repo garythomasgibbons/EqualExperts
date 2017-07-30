@@ -2,17 +2,14 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace EqualExperts.Pages
 {
     public class HotelBookingsPage : BasePage
     {
         private ChromeDriver Page;
-        public int NumberOfBookings = 0;
+        private int NumberOfBookings = 0;
         private By firstNameTxt => By.Id("firstname");
         private By lastNameTxt => By.Id("lastname");
         private By totalPriceTxt => By.Id("totalprice");
@@ -20,90 +17,115 @@ namespace EqualExperts.Pages
         private By checkInTxt => By.Id("checkin");
         private By checkOutTxt => By.Id("checkout");
         private By saveButton => By.CssSelector("[value=' Save ']");
-        private By numberOfBookings => By.Id("bookings");
-
-        public BookingDetails bookingDetails = new BookingDetails("firstname", "lastName", "10.00", "false", "2019-10-10", "2019-10-10");
+        private By bookings => By.CssSelector("div#bookings > div");
+        private By deleteButton => By.CssSelector("[value='Delete']");
 
         public HotelBookingsPage()
         {
             Page = driver;
-            NumberOfBookings = GetBookingsCount();
         }
 
         public void LoadPage(string url)
         {
             Page.Url = url;
+            //If no bookings we dont need to wait for ajax to complete
+            if (!Page.FindElements(deleteButton).Count.Equals(0))
+                WaitForAjax();
+                NumberOfBookings = GetBookingsCount();
+        }
+
+        private void WaitForAjax()
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            wait.Until(d => (bool)(d as IJavaScriptExecutor).ExecuteScript("return jQuery.active == 0"));
         }
 
         public int GetBookingsCount()
         {
-            return Page.FindElements(numberOfBookings).Count - 1;
+            return Page.FindElements(bookings).Count - 1;
         }
 
-        public void CreateABooking()
+        public void CreateABooking(string firstName, string lastName, string price)
         {
-            Page.FindElement(firstNameTxt).SendKeys(bookingDetails.FirstName);
-            Page.FindElement(lastNameTxt).SendKeys(bookingDetails.LastName);
-            Page.FindElement(totalPriceTxt).SendKeys(bookingDetails.Price);           
+            Page.FindElement(firstNameTxt).SendKeys(firstName);
+            Page.FindElement(lastNameTxt).SendKeys(lastName);
+            Page.FindElement(totalPriceTxt).SendKeys(price);           
         }
 
         public void ClickSave()
         {
             Page.FindElement(saveButton).Click();
+            RefreshPage();
+        }
+
+        private void RefreshPage()
+        {
             Page.Navigate().Refresh();
+            WaitForAjax();
         }
 
-        public void SetValidBigEndianDates()
+        public void SetDates(string checkIn, string checkOut)
         {
-            Page.FindElement(checkInTxt).SendKeys(bookingDetails.CheckIn);
-            Page.FindElement(checkOutTxt).SendKeys(bookingDetails.CheckOut);
-        }
-
-        public void SetDepositToFalse()
-        {
-            SetDeposit("false");
+            Page.FindElement(checkInTxt).SendKeys(checkIn);
+            Page.FindElement(checkOutTxt).SendKeys(checkOut);
         }
 
         public bool BookingCreated()
         {
-            return GetBookingsCount().Equals(NumberOfBookings + 1);
+           return GetBookingsCount().Equals(NumberOfBookings + 1);
         }
 
-        public bool CheckBookingDetails()
+        public bool BookingDeleted()
         {
-            //to do
-            return true;
+            return GetBookingsCount().Equals(NumberOfBookings);
         }
 
-        private void SetDeposit(string value)
+        public bool CheckBookingDetails(BookingDetails expectedBookingDetails)
+        {
+            BookingDetails actualBookingDetails = GetMyBooking();
+
+            if (expectedBookingDetails.FirstName.Equals(actualBookingDetails.FirstName)
+                && expectedBookingDetails.LastName.Equals(actualBookingDetails.LastName)
+                && expectedBookingDetails.Price.Equals(actualBookingDetails.Price)
+                && expectedBookingDetails.Deposit.Equals(actualBookingDetails.Deposit)
+                && expectedBookingDetails.CheckIn.Equals(actualBookingDetails.CheckIn)
+                && expectedBookingDetails.CheckOut.Equals(actualBookingDetails.CheckOut))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private BookingDetails GetMyBooking()
+        {
+            var theLastBooking = GetLastBooking();
+            var first = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(1)")).Text;
+            var last = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(2)")).Text;
+            var price = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(3)")).Text;
+            var deposit = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(4)")).Text;
+            var checkIn = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(5)")).Text;
+            var checkOut = theLastBooking[0].FindElement(By.CssSelector("div:nth-child(6)")).Text;
+
+            return new BookingDetails(first, last, price, deposit, checkIn, checkOut);
+        }
+
+        private ReadOnlyCollection<IWebElement> GetLastBooking()
+        {
+            var myRow = (GetBookingsCount() + 1).ToString();
+            return Page.FindElements(By.CssSelector("div#bookings > div:nth-child(" + myRow + ")"));
+        }
+
+        public void DeleteTheLastBooking()
+        {
+            var theLastBooking = GetLastBooking();
+            theLastBooking[0].FindElement(deleteButton).Click();
+            RefreshPage();
+        }
+
+        public void SetDeposit(string value)
         {
             new SelectElement(Page.FindElement(depositSelect)).SelectByText(value);
-        }
-
-        public class BookingDetails
-        {
-            public string FirstName;
-            public string LastName;
-            public string Price;
-            public string Deposit;
-            public string CheckIn;
-            public string CheckOut;
-
-            public BookingDetails(string firstname, string lastName, string price, string deposit, string checkIn, string checkOut)
-            {
-                FirstName = firstname + "_" + GetTimeInSeconds().ToString();
-                LastName = lastName + "_" + GetTimeInSeconds().ToString(); 
-                Price = price;
-                Deposit = deposit;
-                CheckIn = checkIn;
-                CheckOut = checkOut;
-            }
-
-            private int GetTimeInSeconds()
-            {
-                TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
-                return (int)t.TotalSeconds;
-            }
         }
     }
 }

@@ -88,6 +88,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BookingDetails.cs" />
     <Compile Include="Features\HotelBookings.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -12,4 +12,9 @@ When I click save
 Then my reservation will be created 
   And my booking details are correct
 
+Scenario: Delete a booking 
+Given I have created a booking 
+When I delete the booking 
+Then the booking will be deleted 
+
 
