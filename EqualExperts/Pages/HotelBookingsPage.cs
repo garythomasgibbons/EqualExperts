@@ -45,7 +45,7 @@ namespace EqualExperts.Pages
             return Page.FindElements(bookings).Count - 1;
         }
 
-        public void CreateABooking(string firstName, string lastName, string price)
+        public void CreateNamePrice(string firstName, string lastName, string price)
         {
             Page.FindElement(firstNameTxt).SendKeys(firstName);
             Page.FindElement(lastNameTxt).SendKeys(lastName);
