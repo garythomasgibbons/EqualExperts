@@ -65,7 +65,7 @@ To be executed in supported browsers and mobile devices.
 *When I delete all the bookings* <br>
 *Then all the bookings will be deleted* <br>
 
-**Scenario:** Concurrently delete a single booking in a different sessions<br>
+**Scenario:** Concurrently delete a single booking in different sessions<br>
 *Given I have one booking* <br>
 *When User 1 one deletes the booking* <br>
 *And User 2 deletes the same booking* <br>
