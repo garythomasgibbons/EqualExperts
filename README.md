@@ -144,6 +144,12 @@ To be executed in supported browsers and mobile devices.
 | vaidfirst |   validSur | 10.00   | 2020-10-10  | 20201010      |
 
 
+## Automated Tests
+
+Tests have been developed in visual studio 2015. To run the Automated test clone this repository and open the .sln file (ensure you have the NuGet package restore option enabled) 
+
+
+
 
 
 
