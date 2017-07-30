@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EqualExperts
+﻿namespace EqualExperts
 {
     public class BookingDetails
     {

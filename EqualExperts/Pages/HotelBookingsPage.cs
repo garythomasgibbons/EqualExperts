@@ -9,7 +9,7 @@ namespace EqualExperts.Pages
     public class HotelBookingsPage : BasePage
     {
         private ChromeDriver Page;
-        public int NumberOfBookings = 0;
+        private int NumberOfBookings = 0;
         private By firstNameTxt => By.Id("firstname");
         private By lastNameTxt => By.Id("lastname");
         private By totalPriceTxt => By.Id("totalprice");
