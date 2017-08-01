@@ -47,9 +47,9 @@ namespace EqualExperts.Pages
 
         public void CreateNamePrice(string firstName, string lastName, string price)
         {
-            Page.FindElement(firstNameTxt).SendKeys(firstName);
-            Page.FindElement(lastNameTxt).SendKeys(lastName);
-            Page.FindElement(totalPriceTxt).SendKeys(price);           
+            ClearAndSendKeys(Page.FindElement(firstNameTxt), firstName);
+            ClearAndSendKeys(Page.FindElement(lastNameTxt), lastName);
+            ClearAndSendKeys(Page.FindElement(totalPriceTxt), price);          
         }
 
         public void ClickSave()
@@ -61,13 +61,20 @@ namespace EqualExperts.Pages
         private void RefreshPage()
         {
             Page.Navigate().Refresh();
-            WaitForAjax();
+            if (!Page.FindElements(deleteButton).Count.Equals(0))
+                WaitForAjax();
         }
 
         public void SetDates(string checkIn, string checkOut)
         {
-            Page.FindElement(checkInTxt).SendKeys(checkIn);
-            Page.FindElement(checkOutTxt).SendKeys(checkOut);
+            ClearAndSendKeys(Page.FindElement(checkInTxt), checkIn);
+            ClearAndSendKeys(Page.FindElement(checkOutTxt), checkOut);
+        }
+
+        private void ClearAndSendKeys(IWebElement element, string inputText)
+        {
+            element.Clear();
+            element.SendKeys(inputText);
         }
 
         public bool BookingCreated()

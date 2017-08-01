@@ -22,5 +22,6 @@ namespace EqualExperts.Pages
         {
             driver.Quit();
         }
+
     }
 }
