@@ -115,7 +115,9 @@ To be executed in supported browsers and mobile devices.
 *And User 1 and User 2 can seen all booking details* <br>
 
 **Scenario Outline:** validation of input fields <br>
-*Given I enter `<firstName>`, `<surName>`, `<price>`, `<checkIn>`, `<checkOut>`* <br>
+*Given I entered the following data into the booking form:* <br>
+| FirstName     | LastName  | Price   | Deposit   | CheckIn   | CheckOut   | <br>
+| \<firstName\>   | \<surName\> | \<price\> | \<deposit\> | \<checkIn\> | \<checkOut\> |
 *When I click Save* <br>
 *Then a booking is NOT created* <br>
 
@@ -124,24 +126,24 @@ To be executed in supported browsers and mobile devices.
  firstName | surName | price | checkIn | checkOut 
   --- | --- | ---| ---  | --- 
 |           |  |  |  | | 
-|           | validSurname | 10.00 | 2020-10-10 | 2020-10-11 | 
-| 213       | validSur    | 10.00 | 2020-10-10 | 2020-10-11 | 
-| $%#%      | validSur    | 10.00 | 2020-10-10 | 2020-10-11 | 
-| vaidfirst |              | 10.00 | 2020-10-10 | 2020-10-11 |
-| vaidfirst |       1213   | 10.00 | 2020-10-10 | 2020-10-11 |
-| vaidfirst |   $%#%  | 10.00 | 2020-10-10 | 2020-10-11 |
-| vaidfirst |   validSur  |  | 2020-10-10 | 2020-10-11 |
-| vaidfirst |   validSur  | fds | 2020-10-10 | 2020-10-11 |
-| vaidfirst |   validSur  | -10 | 2020-10-10 | 2020-10-11 |
-| vaidfirst |   validSur  | 10.123 | 2020-10-10 | 2020-10-11 |
-| vaidfirst |   validSur  | 10  |  | 2020-10-11 |
-| vaidfirst |   validSur | 10   | tenth April  | 2020-10-11 |
-| vaidfirst |   validSur | 10.00   | $%#%  | 2020-10-11 |
-| vaidfirst |   validSur | 10.00   | 20201010 | 2020-10-11 |
-| vaidfirst |   validSur | 10.00   | 2020-10-10  |  |
-| vaidfirst |   validSur | 10.00   | 2020-10-10  | tenth April |
-| vaidfirst |   validSur | 10.00   | 2020-10-10  | $%#%       |
-| vaidfirst |   validSur | 10.00   | 2020-10-10  | 20201010      |
+|           | validSurname | 10.00 | false | 2020-10-10 | 2020-10-11 | 
+| 213       | validSur    | 10.00 | false | 2020-10-10 | 2020-10-11 | 
+| $%#%      | validSur    | 10.00 | false | 2020-10-10 | 2020-10-11 | 
+| vaidfirst |              | 10.00 | false | 2020-10-10 | 2020-10-11 |
+| vaidfirst |       1213   | 10.00 | false | 2020-10-10 | 2020-10-11 |
+| vaidfirst |   $%#%  | 10.00 | false | 2020-10-10 | 2020-10-11 |
+| vaidfirst |   validSur  |  | false | 2020-10-10 | 2020-10-11 |
+| vaidfirst |   validSur  | fds | false | 2020-10-10 | 2020-10-11 |
+| vaidfirst |   validSur  | -10 | false | 2020-10-10 | 2020-10-11 |
+| vaidfirst |   validSur  | 10.123 | false | 2020-10-10 | 2020-10-11 |
+| vaidfirst |   validSur  | 10  |  | false | 2020-10-11 |
+| vaidfirst |   validSur | 10   | false | tenth April  | 2020-10-11 |
+| vaidfirst |   validSur | 10.00   | false |  $%#%  | 2020-10-11 |
+| vaidfirst |   validSur | 10.00   | false | 20201010 | 2020-10-11 |
+| vaidfirst |   validSur | 10.00   | false | 2020-10-10  |  |
+| vaidfirst |   validSur | 10.00   | false | 2020-10-10  | tenth April |
+| vaidfirst |   validSur | 10.00   | false | 2020-10-10  | $%#%       |
+| vaidfirst |   validSur | 10.00   | false | 2020-10-10  | 20201010      |
 
 
 
