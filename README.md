@@ -117,7 +117,7 @@ To be executed in supported browsers and mobile devices.
 **Scenario Outline:** validation of input fields <br>
 *Given I entered the following data into the booking form:* <br>
 | FirstName     | LastName  | Price   | Deposit   | CheckIn   | CheckOut   | <br>
-| \<firstName\>   | \<surName\> | \<price\> | \<deposit\> | \<checkIn\> | \<checkOut\> |
+| \<firstName\>   | \<surName\> | \<price\> | \<deposit\> | \<checkIn\> | \<checkOut\> | <br>
 *When I click Save* <br>
 *Then a booking is NOT created* <br>
 
