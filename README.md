@@ -26,14 +26,14 @@ To be executed in supported browsers and mobile devices.
 *And all details will be displayed correctly*<br>
 
 **Scenario:** Create a booking with price as double<br>
-*Given I add a price as '10.99'
+*Given I add a price as '10.99'* <br>
 *And I enter valid details into all other required fields* <br>
 *when I click save* <br>
 *Then my reservation will be created* <br>
 *And all details will be displayed correctly*<br>
 
 **Scenario:** Create a booking with price as an integer<br>
-*Given I add a price as '100'
+*Given I add a price as '100'* <br>
 *And I enter valid details into all other required fields* <br>
 *when I click save* <br>
 *Then my reservation will be created* <br>
@@ -144,6 +144,12 @@ To be executed in supported browsers and mobile devices.
 | vaidfirst |   validSur | 10.00   | false | 2020-10-10  | tenth April |
 | vaidfirst |   validSur | 10.00   | false | 2020-10-10  | $%#%       |
 | vaidfirst |   validSur | 10.00   | false | 2020-10-10  | 20201010      |
+
+
+## Automated Tests
+
+Tests have been developed in visual studio 2015. To run the Automated test clone this repository and open the .sln file (ensure you have the NuGet package restore option enabled) 
+
 
 
 
