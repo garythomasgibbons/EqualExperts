@@ -17,4 +17,32 @@ Given I have created a booking
 When I delete the booking 
 Then the booking will be deleted 
 
+Scenario Outline: validation of input fields 
+Given I enter <firstName>, <surname>, <price>, <checkIn>, <checkOut> 
+When I click Save 
+Then a booking is NOT created 
+
+Examples:
+| firstName | surname      | price  | checkIn     | checkOut    |
+|           |              |        |             |             | 
+|           | validSurname | 10.00  | 2020-10-10  | 2020-10-11  | 
+| 213       | validSur     | 10.00  | 2020-10-10  | 2020-10-11  | 
+| $%#%      | validSur     | 10.00  | 2020-10-10  | 2020-10-11  | 
+| vaidfirst |              | 10.00  | 2020-10-10  | 2020-10-11  |
+| vaidfirst |       1213   | 10.00  | 2020-10-10  | 2020-10-11  |
+| vaidfirst |   $%#%       | 10.00  | 2020-10-10  | 2020-10-11  |
+| vaidfirst |   validSur   |        | 2020-10-10  | 2020-10-11  |
+| vaidfirst |   validSur   | fds    | 2020-10-10  | 2020-10-11  |
+| vaidfirst |   validSur   | -10    | 2020-10-10  | 2020-10-11  |
+| vaidfirst |   validSur   | 10.123 | 2020-10-10  | 2020-10-11  |
+| vaidfirst |   validSur   | 10     |             | 2020-10-11  |
+| vaidfirst |   validSur   | 10     | tenth April | 2020-10-11  |
+| vaidfirst |   validSur   | 10.00  | $%#%        | 2020-10-11  |
+| vaidfirst |   validSur   | 10.00  | 20201010    | 2020-10-11  |
+| vaidfirst |   validSur   | 10.00  | 2020-10-10  |             |
+| vaidfirst |   validSur   | 10.00  | 2020-10-10  | third April |
+| vaidfirst |   validSur   | 10.00  | 2020-10-10  | $%#%        |
+| vaidfirst |   validSur   | 10.00  | 2020-10-10  | 20201010    |
+
+
 
