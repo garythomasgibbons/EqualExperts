@@ -110,13 +110,12 @@ namespace EqualExperts.StepDefinitions
         }
 
         [When(@"I delete all the bookings")]
-        public void WhenIDeleteAllTheBookings()
+        public  void WhenIDeleteAllTheBookings()
         {
             var numberOfBookings = GetBookingsCount();
-            for (int i=0; i <= numberOfBookings; i++)
+            for (int i=0; i < numberOfBookings; i++)
             {
                 DeleteTheBooking();
-                numberOfBookings = GetBookingsCount();
             }
         }
 
