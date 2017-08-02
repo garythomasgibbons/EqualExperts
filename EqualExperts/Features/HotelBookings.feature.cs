@@ -111,9 +111,82 @@ this.FeatureBackground();
 #line 16
 testRunner.Given("I have created a booking", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 17
-testRunner.When("I delete the booking", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.And("I click save", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 18
+testRunner.When("I delete the booking", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 19
 testRunner.Then("the booking will be deleted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Delete all bookings")]
+        public virtual void DeleteAllBookings()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Delete all bookings", ((string[])(null)));
+#line 21
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line 22
+testRunner.Given("I have one or more bookings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 23
+testRunner.When("I delete all the bookings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 24
+testRunner.Then("all the bookings will be deleted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("validation of input fields")]
+        [NUnit.Framework.TestCaseAttribute("", "validSurname", "10.01", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("213", "validSur", "10.02", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("$%#%", "validSur", "10.03", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "", "10.04", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "1213", "10.05", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "$%#%", "10.06", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "fds", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "-10", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.123", "false", "2020-10-10", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.07", "false", "", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.08", "false", "tenth April", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.09", "false", "$%#%", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.10", "false", "20201010", "2020-10-11", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.11", "false", "2020-10-10", "", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.12", "false", "2020-10-10", "third April", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.13", "false", "2020-10-10", "$%#%", null)]
+        [NUnit.Framework.TestCaseAttribute("vaidfirst", "validSur", "10.00", "false", "2020-10-10", "20201010", null)]
+        public virtual void ValidationOfInputFields(string firstName, string surname, string price, string deposit, string checkIn, string checkOut, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("validation of input fields", exampleTags);
+#line 26
+this.ScenarioSetup(scenarioInfo);
+#line 3
+this.FeatureBackground();
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "FirstName",
+                        "LastName",
+                        "Price",
+                        "Deposit",
+                        "CheckIn",
+                        "CheckOut"});
+            table1.AddRow(new string[] {
+                        string.Format("{0}", firstName),
+                        string.Format("{0}", surname),
+                        string.Format("{0}", price),
+                        string.Format("{0}", deposit),
+                        string.Format("{0}", checkIn),
+                        string.Format("{0}", checkOut)});
+#line 27
+testRunner.Given("I entered the following data into the booking form:", ((string)(null)), table1, "Given ");
+#line 30
+testRunner.When("I click save", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 31
+testRunner.Then("a booking is NOT created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
