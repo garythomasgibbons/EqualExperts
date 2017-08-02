@@ -19,7 +19,7 @@ When I delete the booking
 Then the booking will be deleted 
 
 Scenario: Delete all bookings
-Given I have more than one booking
+Given I have one or more bookings
 When I delete all the bookings
 Then all the bookings will be deleted
 

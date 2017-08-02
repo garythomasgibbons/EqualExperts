@@ -90,14 +90,11 @@ namespace EqualExperts.StepDefinitions
             GivenITypeValidAndLogicalDatesDirectlyIntoTheCheckinAndCheckoutFieldsInBigEndianFormat();
         }
 
-        [Given(@"I have more than one booking")]
-        public void GivenIHaveMoreThanOneBooking()
+        [Given(@"I have one or more bookings")]
+        public void GivenIHaveOneOrMoreBookings()
         {
             if (hotelBookingsPage.GetBookingsCount() < 1)
             {
-                GivenIHaveCreatedABooking();
-                WhenIClickSave();
-                bookingDetails = new BookingDetails("firstname_" + GetUniqueValue(), "lastName_" + GetUniqueValue(), "10.52", "false", checkIn, checkOut);
                 GivenIHaveCreatedABooking();
                 WhenIClickSave();
             }

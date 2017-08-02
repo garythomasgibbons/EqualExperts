@@ -130,7 +130,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line 22
-testRunner.Given("I have more than one booking", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+testRunner.Given("I have one or more bookings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 23
 testRunner.When("I delete all the bookings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 24
