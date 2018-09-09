@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.ObjectModel;
+using EqualExperts.Extensions;
 
 namespace EqualExperts.Pages
 {
@@ -47,9 +48,9 @@ namespace EqualExperts.Pages
 
         public void CreateNamePrice(string firstName, string lastName, string price)
         {
-            ClearAndSendKeys(Page.FindElement(firstNameTxt), firstName);
-            ClearAndSendKeys(Page.FindElement(lastNameTxt), lastName);
-            ClearAndSendKeys(Page.FindElement(totalPriceTxt), price);          
+            Page.FindElement(firstNameTxt).ClearAndSendKeys(firstName);
+            Page.FindElement(lastNameTxt).ClearAndSendKeys(lastName);
+            Page.FindElement(totalPriceTxt).ClearAndSendKeys(price);          
         }
 
         public void ClickSave()
@@ -67,14 +68,8 @@ namespace EqualExperts.Pages
 
         public void SetDates(string checkIn, string checkOut)
         {
-            ClearAndSendKeys(Page.FindElement(checkInTxt), checkIn);
-            ClearAndSendKeys(Page.FindElement(checkOutTxt), checkOut);
-        }
-
-        private void ClearAndSendKeys(IWebElement element, string inputText)
-        {
-            element.Clear();
-            element.SendKeys(inputText);
+            Page.FindElement(checkInTxt).ClearAndSendKeys(checkIn);
+            Page.FindElement(checkOutTxt).ClearAndSendKeys(checkOut);
         }
 
         public bool BookingCreated()
